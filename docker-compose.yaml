@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  midas-news-scorer:
+    container_name: midas-news-scorer
+    image: midas/news-scorer:0.1.0
+    build: .
+    networks:
+      - midas
+    environment:
+      - NEWS_KEYWORDS=petrobras
+      - DEPLOY=local
+      - BUCKET=dev-midas-news-scoring
+
+  minio:
+    container_name: minio
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001"
+    networks:
+      - midas
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      - MINIO_ROOT_USER=miniodev
+      - MINIO_ROOT_PASSWORD=miniodev
+
+networks:
+  midas:
+    name: midas
