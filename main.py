@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from src import utils
-from src.LLM import ChatGPT35
+from src.llm import ChatGPT35
 from src.object_storage import S3ObjectStorage
 from src.logger import logging
 from settings import Settings
@@ -19,7 +19,7 @@ def main():
         path=f"news-feed-responses/{settings.RUN_ID}-articles.csv",
     )
     if not news_parsed_data:
-        return None
+        return
 
     articles_df = pd.read_csv(news_parsed_data)
 
