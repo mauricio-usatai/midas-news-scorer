@@ -11,6 +11,7 @@ services:
       - NEWS_KEYWORDS=petrobras
       - DEPLOY=local
       - BUCKET=dev-midas-news-scoring
+      - RUN_ID=test
 
   minio:
     container_name: minio

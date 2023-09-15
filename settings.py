@@ -23,12 +23,12 @@ class Settings(BaseSettings):
     BUCKET: str = os.environ.get("BUCKET", "dev-midas-news-scoring")
 
     # Prompt config
-    MODEL_CONTEXT = f"""
+    MODEL_CONTEXT: str = f"""
     Preciso que você faça uma tarefa. É o seguinte, eu vou te dar um texto que é uma notícia sobre a empresa {NEWS_KEYWORDS}. Aí você vai me dizer se essa notícia é favorável ou não para aquela empresa. Vamos utilizar suas conclusões pra criar uma espécie de score para determinar se vale a pena ou não (ou se é o momento certo) para investir em determinada ação.
     Avalie a notícia e dê um score de 0 a 10 onde o score 0 seria algo como "a empresa vai falir amanhã" e o score 10 "o valor da ação vai subir 500% amanhã"
     O score da notícia deve estar especificado em um novo parágrafo no final da resposta no formato a seguir: "Score": "5"
     """
-    NEWS_PROMPT_TEMPLATE = """
+    NEWS_PROMPT_TEMPLATE: str = """
     Aqui está a notícia: {news_content}
     """
 

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from src import utils
-from src.llm import ChatGPT35
+from src.llm_model import ChatGPT35
 from src.object_storage import S3ObjectStorage
 from src.logger import logging
 from settings import Settings
@@ -26,7 +26,7 @@ def main():
     # get model response
     llm = ChatGPT35()
     chat_responses = []
-    for index in range(len(chat_responses)):
+    for index in range(len(articles_df)):
         news_content = articles_df.iloc[index]["parsedContent"]
 
         if pd.isna(news_content):

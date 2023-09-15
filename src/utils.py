@@ -21,7 +21,7 @@ def save_object(object_storage: ObjectStorage, key: str, obj: object) -> None:
             "Could not determine file type when saving object to remote storage"
         )
     object_storage.put(
-        path=f"char-responses/{settings.RUN_ID}-{key}",
+        path=f"chat-responses/{settings.RUN_ID}-{key}",
         bucket=settings.BUCKET,
         body=buffer,
     )

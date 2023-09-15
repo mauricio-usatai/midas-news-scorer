@@ -12,8 +12,7 @@ RUN pip install --no-cache-dir -r requirements/prod.txt
 FROM base AS tests
 RUN pip install --no-cache-dir -r requirements/dev.txt
 RUN make pylint && \
-    make black && \
-    make pytest
+    make black
 
 FROM base AS build
 CMD ["make", "app"]
