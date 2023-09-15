@@ -38,7 +38,7 @@ def main():
             news_content=news_content,
         )
 
-        chat_responses.append(chat_response)
+        chat_responses.append(chat_response["content"])
 
     articles_df["chatResponses"] = chat_responses
 
