@@ -1,3 +1,6 @@
+from typing import Union
+import re
+
 import numpy as np
 import pandas as pd
 
@@ -10,6 +13,22 @@ from settings import Settings
 
 settings = Settings()
 logger = logging.getLogger(settings.LOGGER)
+
+
+def get_score(text: str) -> Union[str, np.nan]:
+    """
+    Extracts a score from a model response
+    """
+    score = np.nan
+    try:
+        score_string = text.split("\n")[-1]
+        score_candidate = int(re.findall(r"[-]?\d+", score_string)[0])
+        if score_candidate <= 10 and score_candidate >= 0:
+            score = score_candidate
+    except (ValueError, IndexError) as err:
+        logger.error(err)
+
+    return score
 
 
 def main():
@@ -25,11 +44,13 @@ def main():
 
     # get model response
     llm = ChatGPT35()
+    scores = []
     chat_responses = []
     for index in range(len(articles_df)):
         news_content = articles_df.iloc[index]["parsedContent"]
 
-        if pd.isna(news_content):
+        if not pd.isna(news_content):
+            scores.append(np.nan)
             chat_responses.append(np.nan)
             continue
 
@@ -38,8 +59,12 @@ def main():
             news_content=news_content,
         )
 
-        chat_responses.append(chat_response["content"])
+        # Get score from model response
+        chat_response = chat_response["content"]
+        scores.append(get_score(chat_response))
+        chat_responses.append(chat_response)
 
+    articles_df["scores"] = scores
     articles_df["chatResponses"] = chat_responses
 
     # save to S3
