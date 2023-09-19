@@ -50,6 +50,7 @@ def main():
         news_content = articles_df.iloc[index]["parsedContent"]
 
         if pd.isna(news_content):
+
             scores.append(np.nan)
             chat_responses.append(np.nan)
             continue
@@ -60,6 +61,8 @@ def main():
         )
 
         # Get score from model response
+        chat_response = chat_response["content"]
+
         scores.append(get_score(chat_response))
         chat_responses.append(chat_response)
 
