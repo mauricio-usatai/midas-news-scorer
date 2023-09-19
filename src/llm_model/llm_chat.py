@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class LLMChat(ABC):
+    """
+    An "interface" for LLM chat models
+    """
+
     @abstractmethod
     def send_message_from_template(
         self,
