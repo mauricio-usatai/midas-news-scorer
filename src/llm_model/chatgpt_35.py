@@ -47,4 +47,4 @@ class ChatGPT35(LLMChat):
 
         response = self.llm(chat_prompt_with_values.to_messages())
 
-        return response
+        return response.content

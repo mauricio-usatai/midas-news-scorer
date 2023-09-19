@@ -15,7 +15,7 @@ settings = Settings()
 logger = logging.getLogger(settings.LOGGER)
 
 
-def get_score(text: str) -> Union[str, np.nan]:
+def get_score(text: str) -> Union[str, float]:
     """
     Extracts a score from a model response
     """
@@ -49,7 +49,8 @@ def main():
     for index in range(len(articles_df)):
         news_content = articles_df.iloc[index]["parsedContent"]
 
-        if not pd.isna(news_content):
+        if pd.isna(news_content):
+
             scores.append(np.nan)
             chat_responses.append(np.nan)
             continue
@@ -61,6 +62,7 @@ def main():
 
         # Get score from model response
         chat_response = chat_response["content"]
+
         scores.append(get_score(chat_response))
         chat_responses.append(chat_response)
 
